@@ -4,5 +4,9 @@
 
 #include "driver/gpio.h"
 #include "esp_err.h"
-esp_err_t key_init(gpio_num_t gpio_num);
-bool key_get_state(void);
+
+#define key0_press  1
+#define key0_gpio   GPIO_NUM_0
+
+esp_err_t key_init(void);
+uint8_t key_scan(void);

@@ -91,6 +91,7 @@
 		"C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/wifi_provisioning/cmake_install.cmake",
 		"C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/LED/cmake_install.cmake",
 		"C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/KEY/cmake_install.cmake",
+		"C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/cmake_install.cmake",
 		"C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/main/cmake_install.cmake"
 	],
 	"Parallel" : false

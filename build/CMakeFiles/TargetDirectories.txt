@@ -649,6 +649,13 @@ C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/KEY/CMakeFiles/list_in
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/KEY/CMakeFiles/install.dir
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/KEY/CMakeFiles/install/local.dir
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/KEY/CMakeFiles/install/strip.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/CMakeFiles/__idf_EXIT.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/CMakeFiles/edit_cache.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/CMakeFiles/rebuild_cache.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/CMakeFiles/list_install_components.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/CMakeFiles/install.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/CMakeFiles/install/local.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/CMakeFiles/install/strip.dir
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/main/CMakeFiles/__idf_main.dir
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/main/CMakeFiles/edit_cache.dir
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/main/CMakeFiles/rebuild_cache.dir

@@ -5,18 +5,19 @@
 
 void app_main(void)
 {
-	led_init(GPIO_NUM_2);
-	key_init(GPIO_NUM_0);
 
-	while (1) 
+    led_init();
+    key_init();
+
+    while (1)
     {
-        bool key_pressed = key_get_state();
-        if (key_pressed) 
+        if (key_scan() == key0_press)
         {
             led_toggle();
-            vTaskDelay(pdMS_TO_TICKS(20));
+            printf("Key pressed!\n");
+            printf("LED state toggled!\n");
         }
-        vTaskDelay(pdMS_TO_TICKS(10));
-
-	}
+        
+        vTaskDelay(10);
+    }
 }

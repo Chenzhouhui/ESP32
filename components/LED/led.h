@@ -5,6 +5,8 @@
 #include "driver/gpio.h"
 #include "esp_err.h"
 
-esp_err_t led_init(gpio_num_t gpio_num);
+#define led0_gpio   GPIO_NUM_2
+
+esp_err_t led_init(void);
 esp_err_t led_set(bool on);
-void led_toggle(void);
+esp_err_t led_toggle(void);

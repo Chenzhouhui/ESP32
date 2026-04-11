@@ -1,17 +1,17 @@
 #include "led.h"
 
-static gpio_num_t s_led_gpio = GPIO_NUM_NC;
 static bool s_initialized = false;
+static bool s_led_on = false;
 
-esp_err_t led_init(gpio_num_t gpio_num)
+esp_err_t led_init(void)
 {
-	if (!GPIO_IS_VALID_OUTPUT_GPIO(gpio_num)) 
+	if (!GPIO_IS_VALID_OUTPUT_GPIO(led0_gpio)) 
     {
 		return ESP_ERR_INVALID_ARG;
 	}
 
 	gpio_config_t io_conf; 
-	io_conf.pin_bit_mask = 1ULL << gpio_num;
+	io_conf.pin_bit_mask = 1ULL << led0_gpio;
 	io_conf.mode = GPIO_MODE_OUTPUT;
 	io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
 	io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
@@ -24,10 +24,10 @@ esp_err_t led_init(gpio_num_t gpio_num)
 		return ret;
 	}
 
-	s_led_gpio = gpio_num;
 	s_initialized = true;
+    s_led_on = false;
 
-	return gpio_set_level(s_led_gpio, 0);
+	return gpio_set_level(led0_gpio, 0);
 }
 
 esp_err_t led_set(bool on)
@@ -37,10 +37,17 @@ esp_err_t led_set(bool on)
 		return ESP_ERR_INVALID_STATE;
 	}
 
-	return gpio_set_level(s_led_gpio, on ? 1 : 0);
+    s_led_on = on;
+
+	return gpio_set_level(led0_gpio, on ? 1 : 0);
 }
-void led_toggle(void)
+esp_err_t led_toggle(void)
 {
-    int current_level = gpio_get_level(s_led_gpio);
-    gpio_set_level(s_led_gpio, !current_level);
+	if (!s_initialized) 
+	{
+		return ESP_ERR_INVALID_STATE;
+	}
+
+    s_led_on = !s_led_on;
+	return gpio_set_level(led0_gpio, s_led_on ? 1 : 0);
 }
