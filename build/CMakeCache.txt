@@ -18,6 +18,9 @@
 CCACHE_ENABLE:UNINITIALIZED=0
 
 //Path to a program.
+CCACHE_FOUND:FILEPATH=C:/Users/26919/.espressif/tools/ccache/4.11.2/ccache-4.11.2-windows-x86_64/ccache.exe
+
+//Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=C:/Users/26919/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20250707/xtensa-esp-elf/bin/xtensa-esp32-elf-addr2line.exe
 
 //Path to a program.
@@ -558,7 +561,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=92
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=93
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

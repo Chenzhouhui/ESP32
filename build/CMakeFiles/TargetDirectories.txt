@@ -656,6 +656,13 @@ C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/CMakeFiles/list_i
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/CMakeFiles/install.dir
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/CMakeFiles/install/local.dir
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/EXIT/CMakeFiles/install/strip.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/LCD/CMakeFiles/__idf_LCD.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/LCD/CMakeFiles/edit_cache.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/LCD/CMakeFiles/rebuild_cache.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/LCD/CMakeFiles/list_install_components.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/LCD/CMakeFiles/install.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/LCD/CMakeFiles/install/local.dir
+C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/LCD/CMakeFiles/install/strip.dir
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/main/CMakeFiles/__idf_main.dir
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/main/CMakeFiles/edit_cache.dir
 C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/main/CMakeFiles/rebuild_cache.dir

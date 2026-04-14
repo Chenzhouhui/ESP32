@@ -64,4 +64,5 @@ $<TARGET_FILE:__idf_wifi_provisioning>
 $<TARGET_FILE:__idf_LED>
 $<TARGET_FILE:__idf_KEY>
 $<TARGET_FILE:__idf_EXIT>
+$<TARGET_FILE:__idf_LCD>
 $<TARGET_FILE:__idf_main>

@@ -6,4 +6,3 @@ Call Stack (most recent call first):
   CMakeLists.txt:11 (project)
 
 
-ninja: warning: build log version is too old; starting over
