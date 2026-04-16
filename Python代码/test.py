@@ -36,8 +36,13 @@ while cap.isOpened():
     ret, frame = cap.read()
     if not ret: break
 
-    # 2. 图像处理：缩放并转为 RGB332（1字节/像素）
-    frame = cv2.resize(frame, (128, 128))
+    # 2. 图像处理：先居中裁剪为正方形，再缩放到 128x128，确保铺满屏幕
+    height, width = frame.shape[:2]
+    side = min(height, width)
+    y0 = (height - side) // 2
+    x0 = (width - side) // 2
+    frame = frame[y0:y0 + side, x0:x0 + side]
+    frame = cv2.resize(frame, (128, 128), interpolation=cv2.INTER_AREA)
     b2 = frame[:, :, 0] >> 6
     g3 = frame[:, :, 1] >> 5
     r3 = frame[:, :, 2] >> 5
