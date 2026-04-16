@@ -36,6 +36,7 @@ esp_err_t lcd_set_window(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1);// 
 esp_err_t lcd_draw_pixel(uint16_t x, uint16_t y, uint16_t color);// 在指定坐标绘制单个像素点
 esp_err_t lcd_fill_rect(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t color);// 使用指定颜色填充矩形区域（包含边界）
 esp_err_t lcd_fill_screen(uint16_t color);// 使用指定颜色填充整屏
+esp_err_t lcd_draw_bitmap_rgb565(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint8_t *data, size_t len);// 以 RGB565 大端字节序批量绘制位图
 
 
 void LCD_Init(void);// 兼容旧工程接口：初始化 LCD

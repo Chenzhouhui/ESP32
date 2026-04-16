@@ -172,6 +172,38 @@ esp_err_t lcd_fill_screen(uint16_t color)
     return lcd_fill_rect(0, 0, LCD_W - 1, LCD_H - 1, color);
 }
 
+esp_err_t lcd_draw_bitmap_rgb565(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint8_t *data, size_t len)
+{
+    if (data == NULL || width == 0 || height == 0) {
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    if ((uint32_t)x + (uint32_t)width > LCD_W || (uint32_t)y + (uint32_t)height > LCD_H) {
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    size_t required_len = (size_t)width * (size_t)height * 2U;
+    if (len < required_len) {
+        return ESP_ERR_INVALID_SIZE;
+    }
+
+    esp_err_t ret = lcd_set_window(x, y, (uint16_t)(x + width - 1), (uint16_t)(y + height - 1));
+    if (ret != ESP_OK) {
+        return ret;
+    }
+
+    enum { BYTE_CHUNK = 4096 };
+    size_t sent = 0;
+    while (sent < required_len) {
+        size_t remaining = required_len - sent;
+        size_t chunk = (remaining > BYTE_CHUNK) ? BYTE_CHUNK : remaining;
+        lcd_write_data(data + sent, chunk);
+        sent += chunk;
+    }
+
+    return ESP_OK;
+}
+
 esp_err_t lcd_init(void)
 {
     spi_init();

@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "sample_project",
-    "project_version":    "8146bff-dirty",
+    "project_version":    "c5e62e0-dirty",
     "project_path":       "C:/Users/26919/Desktop/ESP32/Video_test",
     "idf_path":           "C:/Users/26919/esp/v5.2.6/esp-idf",
     "build_dir":          "C:/Users/26919/Desktop/ESP32/Video_test/build",

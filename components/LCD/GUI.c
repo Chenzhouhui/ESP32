@@ -374,6 +374,11 @@ void Gui_Drawbmp16Ex(u16 x, u16 y, u16 width, u16 height, const unsigned char *p
         return;
     }
 
+    esp_err_t fast_ret = lcd_draw_bitmap_rgb565(x, y, width, height, p, (size_t)width * (size_t)height * 2U);
+    if (fast_ret == ESP_OK) {
+        return;
+    }
+
     uint32_t offset = 0;
     for (u16 row = 0; row < height; ++row) {
         for (u16 col = 0; col < width; ++col) {

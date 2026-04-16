@@ -1,6 +1,5 @@
 import cv2
 import serial
-import numpy as np
 import time
 import os
 
@@ -14,11 +13,14 @@ if not cap.isOpened():
     raise SystemExit(1)
 
 BAUD = 2000000
-FRAME_BYTES = 128 * 128 * 2 + 4
+FRAME_BYTES = 128 * 128 + 4
 MAX_LINK_FPS = BAUD / 10.0 / FRAME_BYTES
-TARGET_FPS = min(6.0, MAX_LINK_FPS * 0.85)
+src_fps = cap.get(cv2.CAP_PROP_FPS)
+if src_fps is None or src_fps <= 1.0:
+    src_fps = 30.0
+TARGET_FPS = min(src_fps, MAX_LINK_FPS * 0.96)
 FRAME_INTERVAL = 1.0 / TARGET_FPS
-print(f"串口理论上限约 {MAX_LINK_FPS:.2f} FPS，当前发送 {TARGET_FPS:.2f} FPS")
+print(f"串口理论上限约 {MAX_LINK_FPS:.2f} FPS（RGB332），源视频 {src_fps:.2f} FPS，当前发送 {TARGET_FPS:.2f} FPS")
 
 try:
     ser = serial.Serial('COM4', BAUD, timeout=1, write_timeout=2)
@@ -34,18 +36,16 @@ while cap.isOpened():
     ret, frame = cap.read()
     if not ret: break
 
-    # 2. 图像处理：缩放并转为 RGB565 格式
+    # 2. 图像处理：缩放并转为 RGB332（1字节/像素）
     frame = cv2.resize(frame, (128, 128))
-    img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    
-    r = (img_rgb[:,:,0] >> 3).astype(np.uint16) << 11
-    g = (img_rgb[:,:,1] >> 2).astype(np.uint16) << 5
-    b = (img_rgb[:,:,2] >> 3).astype(np.uint16)
-    rgb565 = (r | g | b).byteswap() 
+    b2 = frame[:, :, 0] >> 6
+    g3 = frame[:, :, 1] >> 5
+    r3 = frame[:, :, 2] >> 5
+    rgb332 = (r3 << 5) | (g3 << 2) | b2
 
     # 3. 发送数据：增加同步头避免错位
     ser.write(b'\xAA\xBB\xCC\xDD') # 4字节同步头
-    ser.write(rgb565.tobytes())   # 32768 字节像素数据
+    ser.write(rgb332.tobytes())   # 16384 字节像素数据
     
     # 按链路可承载速率节流，避免串口缓冲堆积导致花屏
     next_send_time += FRAME_INTERVAL
