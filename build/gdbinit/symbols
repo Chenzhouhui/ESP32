@@ -2,8 +2,8 @@
 
 # Load bootloader symbols
 set confirm off
-    add-symbol-file C:/Users/26919/Desktop/ESP32/sample_project/build/bootloader/bootloader.elf
+    add-symbol-file C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader/bootloader.elf
 set confirm on
 
 # Load application symbols
-file C:/Users/26919/Desktop/ESP32/sample_project/build/sample_project.elf
+file C:/Users/26919/Desktop/ESP32/Video_test/build/sample_project.elf

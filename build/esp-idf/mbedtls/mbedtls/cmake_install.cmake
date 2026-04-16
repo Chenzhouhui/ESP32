@@ -39,16 +39,16 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
-  include("C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/mbedtls/mbedtls/3rdparty/cmake_install.cmake")
-  include("C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
-  include("C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/mbedtls/mbedtls/pkgconfig/cmake_install.cmake")
+  include("C:/Users/26919/Desktop/ESP32/Video_test/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
+  include("C:/Users/26919/Desktop/ESP32/Video_test/build/esp-idf/mbedtls/mbedtls/3rdparty/cmake_install.cmake")
+  include("C:/Users/26919/Desktop/ESP32/Video_test/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
+  include("C:/Users/26919/Desktop/ESP32/Video_test/build/esp-idf/mbedtls/mbedtls/pkgconfig/cmake_install.cmake")
 
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/26919/Desktop/ESP32/sample_project/build/esp-idf/mbedtls/mbedtls/install_local_manifest.txt"
+  file(WRITE "C:/Users/26919/Desktop/ESP32/Video_test/build/esp-idf/mbedtls/mbedtls/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

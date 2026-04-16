@@ -13,7 +13,7 @@
 #define SPI_SCLK_PIN       GPIO_NUM_18
 #define SPI_CS_PIN         GPIO_NUM_4
 
-#define SPI_CLOCK_HZ       (27 * 1000 * 1000) // 当前 SPI 时钟：27MHz
+#define SPI_CLOCK_HZ       (30 * 1000 * 1000) // 当前 SPI 时钟：27MHz
 
 void spi_init(void);
 void spi_write_data(const uint8_t *data, size_t len);

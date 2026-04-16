@@ -1495,7 +1495,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_main_
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = C:\mingw64\bin\cmake.exe --regenerate-during-build -SC:\Users\26919\Desktop\ESP32\sample_project -BC:\Users\26919\Desktop\ESP32\sample_project\build
+  command = C:\mingw64\bin\cmake.exe --regenerate-during-build -SC:\Users\26919\Desktop\ESP32\Video_test -BC:\Users\26919\Desktop\ESP32\Video_test\build
   description = Re-running CMake...
   generator = 1
 
@@ -1512,7 +1512,7 @@ rule CLEAN_ADDITIONAL
 # Rule for cleaning all built files.
 
 rule CLEAN
-  command = C:\Users\26919\.espressif\tools\ninja\1.12.1\ninja.exe $FILE_ARG -t clean $TARGETS
+  command = C:\mingw64\bin\ninja.exe $FILE_ARG -t clean $TARGETS
   description = Cleaning all built files...
 
 
@@ -1520,6 +1520,6 @@ rule CLEAN
 # Rule for printing all primary targets available.
 
 rule HELP
-  command = C:\Users\26919\.espressif\tools\ninja\1.12.1\ninja.exe -t targets
+  command = C:\mingw64\bin\ninja.exe -t targets
   description = All primary targets available:
 

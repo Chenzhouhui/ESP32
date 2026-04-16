@@ -10,18 +10,18 @@ if(NOT EXISTS "C:/Users/26919/esp/v5.2.6/esp-idf/components/bootloader/subprojec
   file(MAKE_DIRECTORY "C:/Users/26919/esp/v5.2.6/esp-idf/components/bootloader/subproject")
 endif()
 file(MAKE_DIRECTORY
-  "C:/Users/26919/Desktop/ESP32/sample_project/build/bootloader"
-  "C:/Users/26919/Desktop/ESP32/sample_project/build/bootloader-prefix"
-  "C:/Users/26919/Desktop/ESP32/sample_project/build/bootloader-prefix/tmp"
-  "C:/Users/26919/Desktop/ESP32/sample_project/build/bootloader-prefix/src/bootloader-stamp"
-  "C:/Users/26919/Desktop/ESP32/sample_project/build/bootloader-prefix/src"
-  "C:/Users/26919/Desktop/ESP32/sample_project/build/bootloader-prefix/src/bootloader-stamp"
+  "C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader"
+  "C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader-prefix"
+  "C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader-prefix/tmp"
+  "C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader-prefix/src/bootloader-stamp"
+  "C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader-prefix/src"
+  "C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader-prefix/src/bootloader-stamp"
 )
 
 set(configSubDirs )
 foreach(subDir IN LISTS configSubDirs)
-    file(MAKE_DIRECTORY "C:/Users/26919/Desktop/ESP32/sample_project/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
+    file(MAKE_DIRECTORY "C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
 endforeach()
 if(cfgdir)
-  file(MAKE_DIRECTORY "C:/Users/26919/Desktop/ESP32/sample_project/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
+  file(MAKE_DIRECTORY "C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
 endif()
