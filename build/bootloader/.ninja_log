@@ -108,9 +108,7 @@
 4310	4468	7980493664977002	bootloader.elf	1e4f02dac99c24c5
 4469	4703	7980493668820651	.bin_timestamp	3f2fa55d4d6e70b3
 4469	4703	7980493668820651	C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader/.bin_timestamp	3f2fa55d4d6e70b3
-8	66	7980556425239874	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	f89b218bab0eafa6
-8	66	7980556425239874	C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	f89b218bab0eafa6
-11	83	7980557281079747	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	f89b218bab0eafa6
-11	83	7980557281079747	C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	f89b218bab0eafa6
 8	61	7980559026781377	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	f89b218bab0eafa6
 8	61	7980559026781377	C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	f89b218bab0eafa6
+9	94	7980564304166143	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	f89b218bab0eafa6
+9	94	7980564304166143	C:/Users/26919/Desktop/ESP32/Video_test/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	f89b218bab0eafa6

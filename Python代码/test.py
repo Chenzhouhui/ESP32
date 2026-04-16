@@ -12,7 +12,7 @@ if not cap.isOpened():
     print(f"无法打开视频文件: {video_path}")
     raise SystemExit(1)
 
-BAUD = 2000000
+BAUD = 3000000
 FRAME_BYTES = 128 * 128 + 4
 MAX_LINK_FPS = BAUD / 10.0 / FRAME_BYTES
 src_fps = cap.get(cv2.CAP_PROP_FPS)

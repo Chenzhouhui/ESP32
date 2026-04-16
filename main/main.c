@@ -13,6 +13,7 @@
 #define FRAME_SIZE_RGB565 (FRAME_PIXELS * 2)
 #define FRAME_HEADER_SIZE 4
 #define UART_RX_BUF_SIZE (FRAME_SIZE_RGB332 * 2)
+#define UART_BAUD_RATE 3000000
 static const char *TAG = "VIDEO";
 
 static bool receive_one_frame(uint8_t *frame_buffer)
@@ -81,7 +82,7 @@ void video_task(void *pvParameters) {
 
     // 配置串口：2M 波特率，大缓冲区
     uart_config_t uart_config = {
-        .baud_rate = 2000000,
+        .baud_rate = UART_BAUD_RATE,
         .data_bits = UART_DATA_8_BITS,
         .parity = UART_PARITY_DISABLE,
         .stop_bits = UART_STOP_BITS_1,
