@@ -92,13 +92,18 @@ esp_err_t lcd_set_window(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
         lcd_swap_u16(&ty0, &ty1);
     }
 
+    uint16_t hx0 = (uint16_t)(tx0 + LCD_X_OFFSET);
+    uint16_t hx1 = (uint16_t)(tx1 + LCD_X_OFFSET);
+    uint16_t hy0 = (uint16_t)(ty0 + LCD_Y_OFFSET);
+    uint16_t hy1 = (uint16_t)(ty1 + LCD_Y_OFFSET);
+
     lcd_write_cmd(ST7735_CMD_CASET);
-    lcd_write_u16(tx0);
-    lcd_write_u16(tx1);
+    lcd_write_u16(hx0);
+    lcd_write_u16(hx1);
 
     lcd_write_cmd(ST7735_CMD_RASET);
-    lcd_write_u16(ty0);
-    lcd_write_u16(ty1);
+    lcd_write_u16(hy0);
+    lcd_write_u16(hy1);
 
     lcd_write_cmd(ST7735_CMD_RAMWR);
 

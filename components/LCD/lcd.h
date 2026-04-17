@@ -15,6 +15,9 @@ typedef uint32_t u32;
 #define LCD_W 128
 #define LCD_H 128
 
+#define LCD_X_OFFSET 2
+#define LCD_Y_OFFSET 2
+
 #define LCD_SOFT_SWAP_XY   0
 #define LCD_SOFT_MIRROR_X  1
 #define LCD_SOFT_MIRROR_Y  0
