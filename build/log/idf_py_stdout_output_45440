@@ -1,0 +1,15 @@
+[1/6] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\26919\Desktop\ESP32\ble_music_box\build\bootloader\esp-idf\esptool_py && C:\Users\26919\.espressif\python_env\idf5.4_py3.13_env\Scripts\python.exe C:/Users/26919/esp/v5.4.4/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 C:/Users/26919/Desktop/ESP32/ble_music_box/build/bootloader/bootloader.bin"
+Bootloader binary size 0x65b0 bytes. 0xa50 bytes (9%) free.
+[2/6] No install step for 'bootloader'
+[3/6] Completed 'bootloader'
+[4/6] Linking CXX executable ble_music_box.elf
+[5/6] Generating binary image from built executable
+esptool.py v4.11.0
+Creating esp32 image...
+Merged 2 ELF sections
+Successfully created esp32 image.
+Generated C:/Users/26919/Desktop/ESP32/ble_music_box/build/ble_music_box.bin
+[6/6] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\26919\Desktop\ESP32\ble_music_box\build\esp-idf\esptool_py && C:\Users\26919\.espressif\python_env\idf5.4_py3.13_env\Scripts\python.exe C:/Users/26919/esp/v5.4.4/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/26919/Desktop/ESP32/ble_music_box/build/partition_table/partition-table.bin C:/Users/26919/Desktop/ESP32/ble_music_box/build/ble_music_box.bin"
+ble_music_box.bin binary size 0xf3710 bytes. Smallest app partition is 0x100000 bytes. 0xc8f0 bytes (5%) free.
+Warning: The smallest app partition is nearly full (5% free space left)!

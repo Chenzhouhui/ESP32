@@ -1,3 +1,3 @@
-idf_component_register(SRCS "spi.c" "lcd.c" "GUI.c"
+idf_component_register(SRCS "lcd.c" "GUI.c"
                     INCLUDE_DIRS "."
-                    REQUIRES driver)
+                    REQUIRES driver esp_timer)

@@ -1,8 +1,0 @@
-CMake Warning at C:/Users/26919/esp/v5.2.6/esp-idf/tools/cmake/gdbinit.cmake:52 (message):
-  Error while generating esp_rom gdbinit
-Call Stack (most recent call first):
-  C:/Users/26919/esp/v5.2.6/esp-idf/tools/cmake/project.cmake:298 (__generate_gdbinit)
-  C:/Users/26919/esp/v5.2.6/esp-idf/tools/cmake/project.cmake:818 (__project_info)
-  CMakeLists.txt:11 (project)
-
-

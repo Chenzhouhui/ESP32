@@ -8,4 +8,4 @@ set(EXTRA_COMPONENT_DIRS components)
 add_compile_options(-fdiagnostics-color=always)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
-project(sample_project)
+project(ble_music_box)

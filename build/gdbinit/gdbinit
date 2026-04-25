@@ -1,2 +1,2 @@
-source C:/Users/26919/Desktop/ESP32/sample_project/build/gdbinit/symbols
-source C:/Users/26919/Desktop/ESP32/sample_project/build/gdbinit/connect
+source C:/Users/26919/Desktop/ESP32/ble_music_box/build/gdbinit/symbols
+source C:/Users/26919/Desktop/ESP32/ble_music_box/build/gdbinit/connect
