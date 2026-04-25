@@ -16,6 +16,8 @@
 
 static const char *TAG = "A2DP_SINK";
 static bool s_started = false;
+static const char *s_device_name = A2DP_DEVICE_NAME;
+static const char *s_status = "Idle";
 static StreamBufferHandle_t s_audio_stream = NULL;
 static TaskHandle_t s_audio_tx_task_handle = NULL;
 
@@ -101,9 +103,23 @@ static void bt_app_a2d_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param)
     switch (event) {
     case ESP_A2D_CONNECTION_STATE_EVT:
         ESP_LOGI(TAG, "A2DP conn state=%d", param->conn_stat.state);
+        if (param->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED) {
+            s_status = "Connected";
+        } else if (param->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTING) {
+            s_status = "Connecting";
+        } else if (param->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTING) {
+            s_status = "Disconnecting";
+        } else {
+            s_status = "Discoverable";
+        }
         break;
     case ESP_A2D_AUDIO_STATE_EVT:
         ESP_LOGI(TAG, "A2DP audio state event");
+        if (param->audio_stat.state == ESP_A2D_AUDIO_STATE_STARTED) {
+            s_status = "Playing";
+        } else {
+            s_status = "Connected";
+        }
         break;
     case ESP_A2D_AUDIO_CFG_EVT:
     {
@@ -150,12 +166,15 @@ esp_err_t a2dp_sink_start(const char *device_name)
         return ESP_OK;
     }
 
+    s_status = "Starting";
+
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
         ret = nvs_flash_init();
     }
     if (ret != ESP_OK) {
+        s_status = "NVS Error";
         return ret;
     }
 
@@ -167,46 +186,55 @@ esp_err_t a2dp_sink_start(const char *device_name)
     esp_bt_controller_config_t bt_cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
     ret = esp_bt_controller_init(&bt_cfg);
     if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
+        s_status = "BT Error";
         return ret;
     }
 
     ret = esp_bt_controller_enable(ESP_BT_MODE_CLASSIC_BT);
     if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
+        s_status = "BT Error";
         return ret;
     }
 
     ret = esp_bluedroid_init();
     if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
+        s_status = "BT Error";
         return ret;
     }
 
     ret = esp_bluedroid_enable();
     if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
+        s_status = "BT Error";
         return ret;
     }
 
     ret = esp_bt_gap_register_callback(bt_app_gap_cb);
     if (ret != ESP_OK) {
+        s_status = "BT Error";
         return ret;
     }
 
     ret = esp_avrc_ct_init();
     if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
+        s_status = "AVRCP Error";
         return ret;
     }
 
     ret = esp_avrc_tg_init();
     if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
+        s_status = "AVRCP Error";
         return ret;
     }
 
     ret = esp_a2d_register_callback(&bt_app_a2d_cb);
     if (ret != ESP_OK) {
+        s_status = "A2DP Error";
         return ret;
     }
 
     ret = esp_a2d_sink_register_data_callback(bt_app_a2d_data_cb);
     if (ret != ESP_OK) {
+        s_status = "A2DP Error";
         return ret;
     }
 
@@ -218,12 +246,14 @@ esp_err_t a2dp_sink_start(const char *device_name)
     ret = es8311_audio_init();
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "ES8311 init failed: %s", esp_err_to_name(ret));
+        s_status = "Codec Error";
         return ret;
     }
 
     s_audio_stream = xStreamBufferCreate(A2DP_AUDIO_STREAM_SIZE_BYTES, A2DP_AUDIO_TRIGGER_LEVEL_BYTES);
     if (s_audio_stream == NULL) {
         ESP_LOGE(TAG, "A2DP stream buffer alloc failed (%d bytes)", A2DP_AUDIO_STREAM_SIZE_BYTES);
+        s_status = "No Memory";
         return ESP_ERR_NO_MEM;
     }
 
@@ -237,22 +267,37 @@ esp_err_t a2dp_sink_start(const char *device_name)
         ESP_LOGE(TAG, "A2DP TX task create failed");
         vStreamBufferDelete(s_audio_stream);
         s_audio_stream = NULL;
+        s_status = "No Memory";
         return ESP_ERR_NO_MEM;
     }
 
     const char *name_to_use = (device_name != NULL && strlen(device_name) > 0) ? device_name : A2DP_DEVICE_NAME;
+    s_device_name = name_to_use;
     ret = esp_bt_gap_set_device_name(name_to_use);
     if (ret != ESP_OK) {
+        s_status = "Name Error";
         return ret;
     }
 
     ret = esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, ESP_BT_GENERAL_DISCOVERABLE);
     if (ret != ESP_OK) {
+        s_status = "Scan Error";
         return ret;
     }
 
     s_started = true;
+    s_status = "Discoverable";
     ESP_LOGI(TAG, "A2DP sink started, device name: %s", name_to_use);
 
     return ESP_OK;
+}
+
+const char *a2dp_sink_get_device_name(void)
+{
+    return s_device_name;
+}
+
+const char *a2dp_sink_get_status(void)
+{
+    return s_status;
 }
