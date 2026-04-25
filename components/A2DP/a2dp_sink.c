@@ -10,10 +10,18 @@
 #include "esp_log.h"
 #include "es8311_app.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/stream_buffer.h"
+#include "freertos/task.h"
 #include "nvs_flash.h"
 
 static const char *TAG = "A2DP_SINK";
 static bool s_started = false;
+static StreamBufferHandle_t s_audio_stream = NULL;
+static TaskHandle_t s_audio_tx_task_handle = NULL;
+
+#define A2DP_AUDIO_STREAM_SIZE_BYTES   (64 * 1024)
+#define A2DP_AUDIO_TRIGGER_LEVEL_BYTES (512)
+#define A2DP_AUDIO_TX_CHUNK_BYTES      (2048)
 
 static uint32_t a2dp_sbc_get_sample_rate_hz(const esp_a2d_mcc_t *mcc)
 {
@@ -35,6 +43,46 @@ static uint32_t a2dp_sbc_get_sample_rate_hz(const esp_a2d_mcc_t *mcc)
         return 16000;
     }
     return 44100;
+}
+
+static void a2dp_audio_tx_task(void *arg)
+{
+    uint8_t tx_buf[A2DP_AUDIO_TX_CHUNK_BYTES];
+    uint32_t write_timeout_count = 0;
+
+    while (1) {
+        size_t received = xStreamBufferReceive(s_audio_stream,
+                                               tx_buf,
+                                               sizeof(tx_buf),
+                                               pdMS_TO_TICKS(200));
+        if (received == 0) {
+            continue;
+        }
+
+        size_t offset = 0;
+        while (offset < received) {
+            size_t bytes_written = 0;
+            esp_err_t ret = es8311_audio_write(tx_buf + offset,
+                                               received - offset,
+                                               &bytes_written,
+                                               pdMS_TO_TICKS(20));
+            if (ret == ESP_OK && bytes_written > 0) {
+                offset += bytes_written;
+                continue;
+            }
+
+            if (ret == ESP_ERR_TIMEOUT) {
+                write_timeout_count++;
+                if ((write_timeout_count % 200U) == 0U) {
+                    ESP_LOGW(TAG, "ES8311 write timeout x%lu", (unsigned long)write_timeout_count);
+                }
+                break;
+            }
+
+            ESP_LOGW(TAG, "ES8311 write failed: %s", esp_err_to_name(ret));
+            break;
+        }
+    }
 }
 
 static void bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)
@@ -76,7 +124,7 @@ static void bt_app_a2d_data_cb(const uint8_t *data, uint32_t len)
 {
     static uint32_t packet_count = 0;
     static uint32_t byte_count = 0;
-    static uint32_t timeout_count = 0;
+    static uint32_t drop_bytes = 0;
 
     packet_count++;
     byte_count += len;
@@ -85,16 +133,13 @@ static void bt_app_a2d_data_cb(const uint8_t *data, uint32_t len)
         ESP_LOGI(TAG, "A2DP stream packets=%lu bytes=%lu", (unsigned long)packet_count, (unsigned long)byte_count);
     }
 
-    if (es8311_audio_is_initialized()) {
-        size_t bytes_written = 0;
-        esp_err_t ret = es8311_audio_write(data, len, &bytes_written, 0);
-        if (ret == ESP_ERR_TIMEOUT) {
-            timeout_count++;
-            if ((timeout_count % 200U) == 0U) {
-                ESP_LOGW(TAG, "ES8311 write timeout x%lu", (unsigned long)timeout_count);
+    if (s_audio_stream != NULL) {
+        size_t sent = xStreamBufferSend(s_audio_stream, data, len, 0);
+        if (sent < len) {
+            drop_bytes += (uint32_t)(len - sent);
+            if ((packet_count % 200U) == 0U) {
+                ESP_LOGW(TAG, "A2DP buffer overflow, dropped=%lu bytes", (unsigned long)drop_bytes);
             }
-        } else if (ret != ESP_OK) {
-            ESP_LOGW(TAG, "ES8311 write failed: %s", esp_err_to_name(ret));
         }
     }
 }
@@ -159,6 +204,23 @@ esp_err_t a2dp_sink_start(const char *device_name)
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "ES8311 init failed: %s", esp_err_to_name(ret));
         return ret;
+    }
+
+    s_audio_stream = xStreamBufferCreate(A2DP_AUDIO_STREAM_SIZE_BYTES, A2DP_AUDIO_TRIGGER_LEVEL_BYTES);
+    if (s_audio_stream == NULL) {
+        return ESP_ERR_NO_MEM;
+    }
+
+    BaseType_t task_ok = xTaskCreate(a2dp_audio_tx_task,
+                                     "a2dp_audio_tx",
+                                     4096,
+                                     NULL,
+                                     configMAX_PRIORITIES - 3,
+                                     &s_audio_tx_task_handle);
+    if (task_ok != pdPASS) {
+        vStreamBufferDelete(s_audio_stream);
+        s_audio_stream = NULL;
+        return ESP_ERR_NO_MEM;
     }
 
     ret = esp_avrc_ct_init();
