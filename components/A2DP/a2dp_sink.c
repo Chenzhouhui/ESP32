@@ -19,9 +19,9 @@ static bool s_started = false;
 static StreamBufferHandle_t s_audio_stream = NULL;
 static TaskHandle_t s_audio_tx_task_handle = NULL;
 
-#define A2DP_AUDIO_STREAM_SIZE_BYTES   (64 * 1024)
+#define A2DP_AUDIO_STREAM_SIZE_BYTES   (48 * 1024)
 #define A2DP_AUDIO_TRIGGER_LEVEL_BYTES (512)
-#define A2DP_AUDIO_TX_CHUNK_BYTES      (2048)
+#define A2DP_AUDIO_TX_CHUNK_BYTES      (1024)
 
 static uint32_t a2dp_sbc_get_sample_rate_hz(const esp_a2d_mcc_t *mcc)
 {
@@ -65,7 +65,7 @@ static void a2dp_audio_tx_task(void *arg)
             esp_err_t ret = es8311_audio_write(tx_buf + offset,
                                                received - offset,
                                                &bytes_written,
-                                               pdMS_TO_TICKS(20));
+                                               portMAX_DELAY);
             if (ret == ESP_OK && bytes_written > 0) {
                 offset += bytes_written;
                 continue;
@@ -159,6 +159,11 @@ esp_err_t a2dp_sink_start(const char *device_name)
         return ret;
     }
 
+    ret = esp_bt_controller_mem_release(ESP_BT_MODE_BLE);
+    if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
+        ESP_LOGW(TAG, "BT BLE mem release failed: %s", esp_err_to_name(ret));
+    }
+
     esp_bt_controller_config_t bt_cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
     ret = esp_bt_controller_init(&bt_cfg);
     if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
@@ -185,6 +190,16 @@ esp_err_t a2dp_sink_start(const char *device_name)
         return ret;
     }
 
+    ret = esp_avrc_ct_init();
+    if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
+        return ret;
+    }
+
+    ret = esp_avrc_tg_init();
+    if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
+        return ret;
+    }
+
     ret = esp_a2d_register_callback(&bt_app_a2d_cb);
     if (ret != ESP_OK) {
         return ret;
@@ -208,29 +223,21 @@ esp_err_t a2dp_sink_start(const char *device_name)
 
     s_audio_stream = xStreamBufferCreate(A2DP_AUDIO_STREAM_SIZE_BYTES, A2DP_AUDIO_TRIGGER_LEVEL_BYTES);
     if (s_audio_stream == NULL) {
+        ESP_LOGE(TAG, "A2DP stream buffer alloc failed (%d bytes)", A2DP_AUDIO_STREAM_SIZE_BYTES);
         return ESP_ERR_NO_MEM;
     }
 
     BaseType_t task_ok = xTaskCreate(a2dp_audio_tx_task,
                                      "a2dp_audio_tx",
-                                     4096,
+                                     3072,
                                      NULL,
-                                     configMAX_PRIORITIES - 3,
+                                     configMAX_PRIORITIES - 1,
                                      &s_audio_tx_task_handle);
     if (task_ok != pdPASS) {
+        ESP_LOGE(TAG, "A2DP TX task create failed");
         vStreamBufferDelete(s_audio_stream);
         s_audio_stream = NULL;
         return ESP_ERR_NO_MEM;
-    }
-
-    ret = esp_avrc_ct_init();
-    if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
-        return ret;
-    }
-
-    ret = esp_avrc_tg_init();
-    if (ret != ESP_OK && ret != ESP_ERR_INVALID_STATE) {
-        return ret;
     }
 
     const char *name_to_use = (device_name != NULL && strlen(device_name) > 0) ? device_name : A2DP_DEVICE_NAME;

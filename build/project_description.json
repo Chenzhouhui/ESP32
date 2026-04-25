@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "ble_music_box",
-    "project_version":    "4b44915-dirty",
+    "project_version":    "6340fa6-dirty",
     "project_path":       "C:/Users/26919/Desktop/ESP32/ble_music_box",
     "idf_path":           "C:/Users/26919/esp/v5.4.4/esp-idf",
     "build_dir":          "C:/Users/26919/Desktop/ESP32/ble_music_box/build",

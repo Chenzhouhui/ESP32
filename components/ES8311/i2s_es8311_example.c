@@ -169,6 +169,8 @@ static esp_err_t i2s_driver_init(void)
 #if !defined(CONFIG_EXAMPLE_BSP)
     i2s_chan_config_t chan_cfg = I2S_CHANNEL_DEFAULT_CONFIG(I2S_NUM, I2S_ROLE_MASTER);
     chan_cfg.auto_clear = true; // Auto clear the legacy data in the DMA buffer
+    chan_cfg.dma_desc_num = 16;
+    chan_cfg.dma_frame_num = 512;
     ESP_RETURN_ON_ERROR(i2s_new_channel(&chan_cfg, &tx_handle, NULL), TAG, "create i2s channel failed");
     i2s_std_config_t std_cfg = {
         .clk_cfg = I2S_STD_CLK_DEFAULT_CONFIG(EXAMPLE_SAMPLE_RATE),
