@@ -1,63 +1,0 @@
-Executing action: all (aliases: build)
-Running ninja in directory C:\Users\26919\Desktop\ESP32\ble_music_box\build
-Executing "ninja all"...
-[0/1] Re-running CMake...
--- ccache will be used for faster recompilation
--- Building ESP-IDF components for target esp32
-NOTICE: Skipping optional dependency: espressif/esp-box
-NOTICE: Using component placed at C:\Users\26919\esp\v5.4.4\esp-idf\examples\peripherals\i2s\i2s_examples_common for dependency "i2s_examples_common", specified in C:\Users\26919\Desktop\ESP32\ble_music_box\components\ES8311\idf_component.yml
-NOTICE: Using component placed at C:\Users\26919\esp\v5.4.4\esp-idf\examples\peripherals\i2s\i2s_examples_common for dependency "i2s_examples_common", specified in C:\Users\26919\Desktop\ESP32\ble_music_box\components\ES8311\idf_component.yml
-NOTICE: Processing 3 dependencies:
-NOTICE: [1/3] espressif/es8311 (1.0.0~1)
-NOTICE: [2/3] i2s_examples_common (*) (C:\Users\26919\esp\v5.4.4\esp-idf\examples\peripherals\i2s\i2s_examples_common)
-NOTICE: [3/3] idf (5.4.4)
-NOTICE: Skipping optional dependency: espressif/esp-box
--- Project sdkconfig file C:/Users/26919/Desktop/ESP32/ble_music_box/sdkconfig
--- Compiler supported targets: xtensa-esp-elf
--- USING O3
--- App "ble_music_box" version: 5897cf8-dirty
--- Adding linker script C:/Users/26919/Desktop/ESP32/ble_music_box/build/esp-idf/esp_system/ld/memory.ld
--- Adding linker script C:/Users/26919/Desktop/ESP32/ble_music_box/build/esp-idf/esp_system/ld/sections.ld.in
--- Adding linker script C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_rom/esp32/ld/esp32.rom.ld
--- Adding linker script C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_rom/esp32/ld/esp32.rom.api.ld
--- Adding linker script C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_rom/esp32/ld/esp32.rom.libgcc.ld
--- Adding linker script C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_rom/esp32/ld/esp32.rom.newlib-data.ld
--- Adding linker script C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_rom/esp32/ld/esp32.rom.syscalls.ld
--- Adding linker script C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_rom/esp32/ld/esp32.rom.newlib-funcs.ld
--- Adding linker script C:/Users/26919/esp/v5.4.4/esp-idf/components/soc/esp32/ld/esp32.peripherals.ld
--- Components: A2DP ES8311 EXIT KEY LCD LED app_trace app_update bootloader bootloader_support bt cmock console cxx driver efuse esp-tls esp_adc esp_app_format esp_bootloader_format esp_coex esp_common esp_driver_ana_cmpr esp_driver_cam esp_driver_dac esp_driver_gpio esp_driver_gptimer esp_driver_i2c esp_driver_i2s esp_driver_isp esp_driver_jpeg esp_driver_ledc esp_driver_mcpwm esp_driver_parlio esp_driver_pcnt esp_driver_ppa esp_driver_rmt esp_driver_sdio esp_driver_sdm esp_driver_sdmmc esp_driver_sdspi esp_driver_spi esp_driver_touch_sens esp_driver_tsens esp_driver_uart esp_driver_usb_serial_jtag esp_eth esp_event esp_gdbstub esp_hal_ieee802154 esp_hid esp_http_client esp_http_server esp_https_ota esp_https_server esp_hw_support esp_lcd esp_local_ctrl esp_mm esp_netif esp_netif_stack esp_partition esp_phy esp_pm esp_psram esp_ringbuf esp_rom esp_security esp_system esp_timer esp_vfs_console esp_wifi espcoredump espressif__es8311 esptool_py fatfs freertos hal heap http_parser i2s_examples_common idf_test ieee802154 json log lwip main mbedtls mqtt newlib nvs_flash nvs_sec_provider openthread partition_table perfmon protobuf-c protocomm pthread rt sdmmc soc spi_flash spiffs tcp_transport ulp unity usb vfs wear_levelling wifi_provisioning wpa_supplicant xtensa
--- Component paths: C:/Users/26919/Desktop/ESP32/ble_music_box/components/A2DP C:/Users/26919/Desktop/ESP32/ble_music_box/components/ES8311 C:/Users/26919/Desktop/ESP32/ble_music_box/components/EXIT C:/Users/26919/Desktop/ESP32/ble_music_box/components/KEY C:/Users/26919/Desktop/ESP32/ble_music_box/components/LCD C:/Users/26919/Desktop/ESP32/ble_music_box/components/LED C:/Users/26919/esp/v5.4.4/esp-idf/components/app_trace C:/Users/26919/esp/v5.4.4/esp-idf/components/app_update C:/Users/26919/esp/v5.4.4/esp-idf/components/bootloader C:/Users/26919/esp/v5.4.4/esp-idf/components/bootloader_support C:/Users/26919/esp/v5.4.4/esp-idf/components/bt C:/Users/26919/esp/v5.4.4/esp-idf/components/cmock C:/Users/26919/esp/v5.4.4/esp-idf/components/console C:/Users/26919/esp/v5.4.4/esp-idf/components/cxx C:/Users/26919/esp/v5.4.4/esp-idf/components/driver C:/Users/26919/esp/v5.4.4/esp-idf/components/efuse C:/Users/26919/esp/v5.4.4/esp-idf/components/esp-tls C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_adc C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_app_format C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_bootloader_format C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_coex C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_common C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_ana_cmpr C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_cam C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_dac C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_gpio C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_gptimer C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_i2c C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_i2s C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_isp C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_jpeg C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_ledc C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_mcpwm C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_parlio C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_pcnt C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_ppa C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_rmt C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_sdio C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_sdm C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_sdmmc C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_sdspi C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_spi C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_touch_sens C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_tsens C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_uart C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_driver_usb_serial_jtag C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_eth C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_event C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_gdbstub C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_hal_ieee802154 C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_hid C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_http_client C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_http_server C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_https_ota C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_https_server C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_hw_support C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_lcd C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_local_ctrl C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_mm C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_netif C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_netif_stack C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_partition C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_phy C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_pm C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_psram C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_ringbuf C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_rom C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_security C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_system C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_timer C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_vfs_console C:/Users/26919/esp/v5.4.4/esp-idf/components/esp_wifi C:/Users/26919/esp/v5.4.4/esp-idf/components/espcoredump C:/Users/26919/Desktop/ESP32/ble_music_box/managed_components/espressif__es8311 C:/Users/26919/esp/v5.4.4/esp-idf/components/esptool_py C:/Users/26919/esp/v5.4.4/esp-idf/components/fatfs C:/Users/26919/esp/v5.4.4/esp-idf/components/freertos C:/Users/26919/esp/v5.4.4/esp-idf/components/hal C:/Users/26919/esp/v5.4.4/esp-idf/components/heap C:/Users/26919/esp/v5.4.4/esp-idf/components/http_parser C:/Users/26919/esp/v5.4.4/esp-idf/examples/peripherals/i2s/i2s_examples_common C:/Users/26919/esp/v5.4.4/esp-idf/components/idf_test C:/Users/26919/esp/v5.4.4/esp-idf/components/ieee802154 C:/Users/26919/esp/v5.4.4/esp-idf/components/json C:/Users/26919/esp/v5.4.4/esp-idf/components/log C:/Users/26919/esp/v5.4.4/esp-idf/components/lwip C:/Users/26919/Desktop/ESP32/ble_music_box/main C:/Users/26919/esp/v5.4.4/esp-idf/components/mbedtls C:/Users/26919/esp/v5.4.4/esp-idf/components/mqtt C:/Users/26919/esp/v5.4.4/esp-idf/components/newlib C:/Users/26919/esp/v5.4.4/esp-idf/components/nvs_flash C:/Users/26919/esp/v5.4.4/esp-idf/components/nvs_sec_provider C:/Users/26919/esp/v5.4.4/esp-idf/components/openthread C:/Users/26919/esp/v5.4.4/esp-idf/components/partition_table C:/Users/26919/esp/v5.4.4/esp-idf/components/perfmon C:/Users/26919/esp/v5.4.4/esp-idf/components/protobuf-c C:/Users/26919/esp/v5.4.4/esp-idf/components/protocomm C:/Users/26919/esp/v5.4.4/esp-idf/components/pthread C:/Users/26919/esp/v5.4.4/esp-idf/components/rt C:/Users/26919/esp/v5.4.4/esp-idf/components/sdmmc C:/Users/26919/esp/v5.4.4/esp-idf/components/soc C:/Users/26919/esp/v5.4.4/esp-idf/components/spi_flash C:/Users/26919/esp/v5.4.4/esp-idf/components/spiffs C:/Users/26919/esp/v5.4.4/esp-idf/components/tcp_transport C:/Users/26919/esp/v5.4.4/esp-idf/components/ulp C:/Users/26919/esp/v5.4.4/esp-idf/components/unity C:/Users/26919/esp/v5.4.4/esp-idf/components/usb C:/Users/26919/esp/v5.4.4/esp-idf/components/vfs C:/Users/26919/esp/v5.4.4/esp-idf/components/wear_levelling C:/Users/26919/esp/v5.4.4/esp-idf/components/wifi_provisioning C:/Users/26919/esp/v5.4.4/esp-idf/components/wpa_supplicant C:/Users/26919/esp/v5.4.4/esp-idf/components/xtensa
--- Configuring done (6.2s)
--- Generating done (0.7s)
--- Build files have been written to: C:/Users/26919/Desktop/ESP32/ble_music_box/build
-[1/14] Performing build step for 'bootloader'
-[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\26919\Desktop\ESP32\ble_music_box\build\bootloader\esp-idf\esptool_py && C:\Users\26919\.espressif\python_env\idf5.4_py3.13_env\Scripts\python.exe C:/Users/26919/esp/v5.4.4/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 C:/Users/26919/Desktop/ESP32/ble_music_box/build/bootloader/bootloader.bin"
-Bootloader binary size 0x65b0 bytes. 0xa50 bytes (9%) free.
-[2/14] No install step for 'bootloader'
-[3/14] Building C object esp-idf/esp_app_format/CMakeFiles/__idf_esp_app_format.dir/esp_app_desc.c.obj
-[4/14] Completed 'bootloader'
-[5/14] Linking C static library esp-idf\esp_app_format\libesp_app_format.a
-[6/14] Building C object esp-idf/ES8311/CMakeFiles/__idf_ES8311.dir/i2s_es8311_example.c.obj
-[7/14] Building C object esp-idf/A2DP/CMakeFiles/__idf_A2DP.dir/a2dp_sink.c.obj
-[8/14] Linking C static library esp-idf\ES8311\libES8311.a
-[9/14] Linking C static library esp-idf\A2DP\libA2DP.a
-[10/14] Generating ld/sections.ld
-[11/14] Linking CXX executable ble_music_box.elf
-[12/14] Generating binary image from built executable
-esptool.py v4.11.0
-Creating esp32 image...
-Merged 2 ELF sections
-Successfully created esp32 image.
-Generated C:/Users/26919/Desktop/ESP32/ble_music_box/build/ble_music_box.bin
-[13/14] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\26919\Desktop\ESP32\ble_music_box\build\esp-idf\esptool_py && C:\Users\26919\.espressif\python_env\idf5.4_py3.13_env\Scripts\python.exe C:/Users/26919/esp/v5.4.4/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/26919/Desktop/ESP32/ble_music_box/build/partition_table/partition-table.bin C:/Users/26919/Desktop/ESP32/ble_music_box/build/ble_music_box.bin"
-ble_music_box.bin binary size 0xf3d70 bytes. Smallest app partition is 0x100000 bytes. 0xc290 bytes (5%) free.
-Warning: The smallest app partition is nearly full (5% free space left)!
-
-Project build complete. To flash, run:
- idf.py flash
-or
- idf.py -p PORT flash
-or
- python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash --flash_mode dio --flash_size 2MB --flash_freq 40m 0x1000 build\bootloader\bootloader.bin 0x8000 build\partition_table\partition-table.bin 0x10000 build\ble_music_box.bin
-or from the "C:\Users\26919\Desktop\ESP32\ble_music_box\build" directory
- python -m esptool --chip esp32 -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"
