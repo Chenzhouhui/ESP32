@@ -19,7 +19,9 @@
 
 static const char *TAG = "i2s_es8311";
 static i2s_chan_handle_t tx_handle = NULL;
+static es8311_handle_t s_es8311_handle = NULL;
 static bool s_audio_initialized = false;
+static uint32_t s_sample_rate_hz = EXAMPLE_SAMPLE_RATE;
 
 void es8311_task(void *args)
 {
@@ -78,6 +80,47 @@ esp_err_t es8311_audio_write(const uint8_t *data, size_t len, size_t *bytes_writ
     return ret;
 }
 
+esp_err_t es8311_audio_set_sample_rate(uint32_t sample_rate_hz)
+{
+    if (!s_audio_initialized) {
+        return ESP_ERR_INVALID_STATE;
+    }
+    if (sample_rate_hz < 8000 || sample_rate_hz > 96000) {
+        return ESP_ERR_INVALID_ARG;
+    }
+    if (sample_rate_hz == s_sample_rate_hz) {
+        return ESP_OK;
+    }
+
+    esp_err_t ret = i2s_channel_disable(tx_handle);
+    if (ret != ESP_OK) {
+        return ret;
+    }
+
+    i2s_std_clk_config_t clk_cfg = I2S_STD_CLK_DEFAULT_CONFIG(sample_rate_hz);
+    clk_cfg.mclk_multiple = EXAMPLE_MCLK_MULTIPLE;
+    ret = i2s_channel_reconfig_std_clock(tx_handle, &clk_cfg);
+    if (ret != ESP_OK) {
+        i2s_channel_enable(tx_handle);
+        return ret;
+    }
+
+    ret = i2s_channel_enable(tx_handle);
+    if (ret != ESP_OK) {
+        return ret;
+    }
+
+    const int codec_mclk_hz = (int)(sample_rate_hz * 32U);
+    ret = es8311_sample_frequency_config(s_es8311_handle, codec_mclk_hz, (int)sample_rate_hz);
+    if (ret != ESP_OK) {
+        return ret;
+    }
+
+    s_sample_rate_hz = sample_rate_hz;
+    ESP_LOGI(TAG, "sample rate updated to %lu Hz", (unsigned long)sample_rate_hz);
+    return ESP_OK;
+}
+
 bool es8311_audio_is_initialized(void)
 {
     return s_audio_initialized;
@@ -102,8 +145,8 @@ static esp_err_t es8311_codec_init(void)
 #endif
 
     /* Initialize es8311 codec */
-    es8311_handle_t es_handle = es8311_create(I2C_NUM, ES8311_ADDRRES_0);
-    ESP_RETURN_ON_FALSE(es_handle, ESP_FAIL, TAG, "es8311 create failed");
+    s_es8311_handle = es8311_create(I2C_NUM, ES8311_ADDRRES_0);
+    ESP_RETURN_ON_FALSE(s_es8311_handle, ESP_FAIL, TAG, "es8311 create failed");
     const es8311_clock_config_t es_clk = {
         .mclk_inverted = false,
         .sclk_inverted = false,
@@ -112,11 +155,11 @@ static esp_err_t es8311_codec_init(void)
         .sample_frequency = EXAMPLE_SAMPLE_RATE
     };
 
-    ESP_RETURN_ON_ERROR(es8311_init(es_handle, &es_clk, ES8311_RESOLUTION_16, ES8311_RESOLUTION_16), TAG, "init es8311 failed");
-    ESP_RETURN_ON_ERROR(es8311_voice_volume_set(es_handle, EXAMPLE_VOICE_VOLUME, NULL), TAG, "set es8311 volume failed");
-    ESP_RETURN_ON_ERROR(es8311_microphone_config(es_handle, false), TAG, "set es8311 microphone failed");
+    ESP_RETURN_ON_ERROR(es8311_init(s_es8311_handle, &es_clk, ES8311_RESOLUTION_16, ES8311_RESOLUTION_16), TAG, "init es8311 failed");
+    ESP_RETURN_ON_ERROR(es8311_voice_volume_set(s_es8311_handle, EXAMPLE_VOICE_VOLUME, NULL), TAG, "set es8311 volume failed");
+    ESP_RETURN_ON_ERROR(es8311_microphone_config(s_es8311_handle, false), TAG, "set es8311 microphone failed");
 #if CONFIG_EXAMPLE_MODE_ECHO
-    ESP_RETURN_ON_ERROR(es8311_microphone_gain_set(es_handle, EXAMPLE_MIC_GAIN), TAG, "set es8311 microphone gain failed");
+    ESP_RETURN_ON_ERROR(es8311_microphone_gain_set(s_es8311_handle, EXAMPLE_MIC_GAIN), TAG, "set es8311 microphone gain failed");
 #endif
     return ESP_OK;
 }

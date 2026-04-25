@@ -15,6 +15,28 @@
 static const char *TAG = "A2DP_SINK";
 static bool s_started = false;
 
+static uint32_t a2dp_sbc_get_sample_rate_hz(const esp_a2d_mcc_t *mcc)
+{
+    if (mcc == NULL || mcc->type != ESP_A2D_MCT_SBC) {
+        return 44100;
+    }
+
+    uint8_t oct0 = mcc->cie.sbc[0];
+    if (oct0 & 0x40) {
+        return 32000;
+    }
+    if (oct0 & 0x20) {
+        return 44100;
+    }
+    if (oct0 & 0x10) {
+        return 48000;
+    }
+    if (oct0 & 0x80) {
+        return 16000;
+    }
+    return 44100;
+}
+
 static void bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)
 {
     if (event == ESP_BT_GAP_AUTH_CMPL_EVT) {
@@ -36,8 +58,15 @@ static void bt_app_a2d_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *param)
         ESP_LOGI(TAG, "A2DP audio state event");
         break;
     case ESP_A2D_AUDIO_CFG_EVT:
-        ESP_LOGI(TAG, "A2DP audio cfg received");
+    {
+        uint32_t sample_rate_hz = a2dp_sbc_get_sample_rate_hz(&param->audio_cfg.mcc);
+        ESP_LOGI(TAG, "A2DP audio cfg received, sample_rate=%lu", (unsigned long)sample_rate_hz);
+        esp_err_t ret = es8311_audio_set_sample_rate(sample_rate_hz);
+        if (ret != ESP_OK) {
+            ESP_LOGW(TAG, "ES8311 set sample rate failed: %s", esp_err_to_name(ret));
+        }
         break;
+    }
     default:
         break;
     }
@@ -47,6 +76,7 @@ static void bt_app_a2d_data_cb(const uint8_t *data, uint32_t len)
 {
     static uint32_t packet_count = 0;
     static uint32_t byte_count = 0;
+    static uint32_t timeout_count = 0;
 
     packet_count++;
     byte_count += len;
@@ -57,8 +87,13 @@ static void bt_app_a2d_data_cb(const uint8_t *data, uint32_t len)
 
     if (es8311_audio_is_initialized()) {
         size_t bytes_written = 0;
-        esp_err_t ret = es8311_audio_write(data, len, &bytes_written, pdMS_TO_TICKS(20));
-        if (ret != ESP_OK) {
+        esp_err_t ret = es8311_audio_write(data, len, &bytes_written, 0);
+        if (ret == ESP_ERR_TIMEOUT) {
+            timeout_count++;
+            if ((timeout_count % 200U) == 0U) {
+                ESP_LOGW(TAG, "ES8311 write timeout x%lu", (unsigned long)timeout_count);
+            }
+        } else if (ret != ESP_OK) {
             ESP_LOGW(TAG, "ES8311 write failed: %s", esp_err_to_name(ret));
         }
     }
